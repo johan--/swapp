@@ -1,0 +1,23 @@
+(function() {
+
+  'use strict';
+
+  var app = angular.module('starter.controller');
+
+  app.controller('MenuController', function($scope, $ionicPopup) {
+  	$scope.logout = function() {
+		var confirmPopup = $ionicPopup.confirm({
+        	title: 'Logout',
+        	template: 'Você quer realmente fazer logout?',
+        	cancelText: 'Não',
+        	okText: 'Sim'
+      	});
+
+      	confirmPopup.then(function(answer) {
+        	if (answer) {
+        	}
+      	});
+  	};
+  });
+
+}());

@@ -31,7 +31,9 @@
     $scope.givePlace = function() {
       var confirmPopup = $ionicPopup.confirm({
         title: 'Disponibilizar vaga',
-        template: 'Você tem certeza que deseja disponibilizar sua vaga?'
+        template: 'Você vai realmente disponibilizar sua vaga?',
+        cancelText: 'Não',
+        okText: 'Sim'
       });
 
       confirmPopup.then(function(answer) {

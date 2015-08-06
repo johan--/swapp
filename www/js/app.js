@@ -29,14 +29,15 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'le
         url: "/app",
         abstract: true,
         templateUrl: "templates/menu.html",
-        controller: 'MapController'
+        controller: "MenuController as menuCtrl"
       })
 
       .state('app.map', {
         url: "/map",
         views: {
           'menuContent' :{
-            templateUrl: "templates/map.html"
+            templateUrl: "templates/map.html",
+            controller: "MapController as mapCtrl"
           }
         }
       })
