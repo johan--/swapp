@@ -1,11 +1,17 @@
-angular.module('starter').controller('MapController',
-  [ '$scope',
+(function() {
+  'use strict';
+
+  var app = angular.module('starter.controller');
+
+  app.controller('MapController',
+    [ '$scope',
     '$cordovaGeolocation',
     '$stateParams',
     '$ionicModal',
     '$ionicPopup',
     'LocationsService',
     'InstructionsService',
+    'UserService',
     function(
       $scope,
       $cordovaGeolocation,
@@ -13,13 +19,27 @@ angular.module('starter').controller('MapController',
       $ionicModal,
       $ionicPopup,
       LocationsService,
-      InstructionsService
+      InstructionsService,
+      UserService
       ) {
+
+      $scope.givePlace = function() {
+        var confirmPopup = $ionicPopup.confirm({
+          title: 'Disponibilizar vaga',
+          template: 'Você tem certeza que deseja disponibilizar sua vaga?'
+        });
+
+        confirmPopup.then(function(answer) {
+          if (answer) {
+          UserService.updateLocation($scope.map);
+        }
+      });
+      };
 
       /**
        * Once state loaded, get put map on scope.
        */
-      $scope.$on("$stateChangeSuccess", function() {
+       $scope.$on("$stateChangeSuccess", function() {
 
         $scope.locations = LocationsService.savedLocations;
         $scope.newLocation;
@@ -32,7 +52,7 @@ angular.module('starter').controller('MapController',
           });
           instructionsPopup.then(function(res) {
             InstructionsService.instructions.newLocations.seen = true;
-            });
+          });
 
         }
 
@@ -55,7 +75,7 @@ angular.module('starter').controller('MapController',
 
       });
 
-      var Location = function() {
+       var Location = function() {
         if ( !(this instanceof Location) ) return new Location();
         this.lat  = "";
         this.lng  = "";
@@ -66,20 +86,20 @@ angular.module('starter').controller('MapController',
         scope: $scope,
         animation: 'slide-in-up'
       }).then(function(modal) {
-          $scope.modal = modal;
-        });
+        $scope.modal = modal;
+      });
 
       /**
        * Detect user long-pressing on map to add new location
        */
-      $scope.$on('leafletDirectiveMap.contextmenu', function(event, locationEvent){
+       $scope.$on('leafletDirectiveMap.contextmenu', function(event, locationEvent){
         $scope.newLocation = new Location();
         $scope.newLocation.lat = locationEvent.leafletEvent.latlng.lat;
         $scope.newLocation.lng = locationEvent.leafletEvent.latlng.lng;
         $scope.modal.show();
       });
 
-      $scope.saveLocation = function() {
+       $scope.saveLocation = function() {
         LocationsService.savedLocations.push($scope.newLocation);
         $scope.modal.hide();
         $scope.goTo(LocationsService.savedLocations.length - 1);
@@ -89,7 +109,7 @@ angular.module('starter').controller('MapController',
        * Center map on specific saved location
        * @param locationKey
        */
-      $scope.goTo = function(locationKey) {
+       $scope.goTo = function(locationKey) {
 
         var location = LocationsService.savedLocations[locationKey];
 
@@ -112,24 +132,24 @@ angular.module('starter').controller('MapController',
       /**
        * Center map on user's current position
        */
-      $scope.locate = function(){
+       $scope.locate = function(){
 
         $cordovaGeolocation
-          .getCurrentPosition()
-          .then(function (position) {
-            $scope.map.center.lat  = position.coords.latitude;
-            $scope.map.center.lng = position.coords.longitude;
-            $scope.map.center.zoom = 15;
+        .getCurrentPosition()
+        .then(function (position) {
+          $scope.map.center.lat  = position.coords.latitude;
+          $scope.map.center.lng = position.coords.longitude;
+          $scope.map.center.zoom = 15;
 
-            $scope.map.markers.now = {
-              lat:position.coords.latitude,
-              lng:position.coords.longitude,
-              message: "You Are Here",
-              focus: true,
-              draggable: false
-            };
+          $scope.map.markers.now = {
+            lat:position.coords.latitude,
+            lng:position.coords.longitude,
+            message: "You Are Here",
+            focus: true,
+            draggable: false
+          };
 
-          }, function(err) {
+        }, function(err) {
             // error
             console.log("Location error!");
             console.log(err);
@@ -138,3 +158,5 @@ angular.module('starter').controller('MapController',
       };
 
     }]);
+
+}());
