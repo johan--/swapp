@@ -54,6 +54,6 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'le
         }
       })
 
-    $urlRouterProvider.otherwise('/app/map');
+    $urlRouterProvider.otherwise('/login');
 
   });
