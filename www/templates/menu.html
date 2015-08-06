@@ -12,10 +12,12 @@
     <ion-content class="has-header">
       <ion-list>
         <ion-item menu-close href="#/app/map">
-          Mapa
+          <i class="icon ion-android-map"></i>
+          <span>Mapa</span>
         </ion-item>
-        <ion-item menu-close ng-click="logout()">
-          Logout
+        <ion-item item-type="item-icon-left" nav-clear menu-close ng-click="logout()">
+          <i class="icon ion-android-exit"></i>
+          <span>Logout</span>
         </ion-item>
       </ion-list>
     </ion-content>
