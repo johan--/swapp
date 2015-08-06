@@ -11,7 +11,7 @@
     '$ionicPopup',
     'LocationsService',
     'InstructionsService',
-    'UserService',
+    'MapService',
     function(
       $scope,
       $cordovaGeolocation,
@@ -20,7 +20,7 @@
       $ionicPopup,
       LocationsService,
       InstructionsService,
-      UserService
+      MapService
       ) {
 
       $scope.givePlace = function() {
@@ -31,7 +31,7 @@
 
         confirmPopup.then(function(answer) {
           if (answer) {
-          UserService.updateLocation($scope.map);
+          MapService.updateLocation($scope.map);
         }
       });
       };
