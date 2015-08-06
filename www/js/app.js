@@ -25,6 +25,18 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'le
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 
+      .state('login', {
+        url: "/login",
+        templateUrl: "templates/login.html",
+        controller: "LoginController"
+      })
+
+      .state('signup', {
+        url: "/signup",
+        templateUrl: "templates/signup.html",
+        controller: "LoginController"
+      })
+
       .state('app', {
         url: "/app",
         abstract: true,

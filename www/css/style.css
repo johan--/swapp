@@ -18,3 +18,63 @@ body {
 .tabs.border-top {
   border-top: 1px solid #ddd !important;
 }
+
+#spinner {
+    -webkit-animation: rotation 5s infinite linear;
+}
+
+@-webkit-keyframes rotation {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(359deg);
+    }
+}
+
+.logo {
+    display: block;
+    position: relative;
+    width: 60%;
+    margin: 0 auto;
+    padding: 1em;
+}
+
+.logo-name {
+    padding: 1em;
+    position: inherit;
+    text-align: center;
+    font-size: 28px;
+    font-family: monospace;
+    color: #444;
+}
+
+.item-note {
+    font-size: 10px;
+    margin-top: -22px;
+    margin-right: -35px;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+
+.chatbox {
+    position:absolute;
+    bottom: 0px;
+}
+.message-input {
+    margin-top: 10px;
+}
+
+.chatbox-container {
+    font-size: 1.2rem;
+    color: rgba(0,0,0,0.8);
+    position:relative;
+    height: 25em;
+    border: 1px solid rgba(0,0,255, 0.2);
+    padding: 10px;
+    line-height: 29px;
+    overflow: hidden;
+}
