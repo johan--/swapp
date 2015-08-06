@@ -25,16 +25,18 @@
 		};
 
 		function setCenter(map, position) {
-			map.center.lat  = position.coords.latitude;
-			map.center.lng = position.coords.longitude;
-			map.center.zoom = 15;
+			map.center = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude,
+				zoom: 15
+			}
 		};
 
 		function setMarker(map, position) {
 			map.markers.now = {
 				lat:position.coords.latitude,
 				lng:position.coords.longitude,
-				message: "You Are Here",
+				message: "Você está aqui =)",
 				focus: true,
 				draggable: false
 			};
@@ -52,8 +54,21 @@
 				console.log(error);
 			}, options);
 		};
-		
+
+		user.givePlace = function(map) {
+			showLoading();
+
+			$cordovaGeolocation.getCurrentPosition().then(function(position) {
+				console.log('realiza o post');
+				setCenter(map, position);
+				setMarker(map, position);
+				hideLoading();
+			}, function(error) {
+				hideLoading();
+				console.log(error);
+			}, options);
+		};
+
 		return user;
 	});
-
 }());
