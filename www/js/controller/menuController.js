@@ -8,7 +8,7 @@
   	$scope.logout = function() {
 		var confirmPopup = $ionicPopup.confirm({
         	title: 'Logout',
-        	template: 'Você quer realmente fazer logout?',
+        	template: 'Você quer realmente sair?',
         	cancelText: 'Não',
         	okText: 'Sim'
       	});
