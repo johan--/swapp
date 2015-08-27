@@ -22,6 +22,10 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'le
     });
   })
 
+    .constant('ApiEndpoint', {
+        url: 'http://localhost:8100/api'
+    })
+
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 

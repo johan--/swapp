@@ -20,7 +20,7 @@ body {
 }
 
 #spinner {
-    -webkit-animation: rotation 5s infinite linear;
+    -webkit-animation: rotation 25s infinite linear;
 }
 
 @-webkit-keyframes rotation {

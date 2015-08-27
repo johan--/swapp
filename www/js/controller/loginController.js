@@ -3,7 +3,9 @@
 
 	var app = angular.module('starter.controller');
 
-	app.controller('LoginController', function ($scope, $state, $ionicModal, $ionicPopup, $ionicLoading) {
+	app.controller('LoginController', function ($scope, $state, $ionicModal, $ionicPopup, UserService) {
+
+        $scope.user = {};
 
 	/**
 	 * Make a modal for a new user
@@ -20,8 +22,12 @@
 	 * @param user {Object} with user data trying to sign up
 	 */
 	 $scope.login = function () {
-	 	console.log("fazer login");
-	 	$state.go('app.map');
+	 	UserService.login($scope.user.email, $scope.user.password).then(function(data) {
+            $state.go('app.map');
+        }, function(err) {
+            showPopup(err.data.mensagem);
+        });
+
 	};
 
 	$scope.signup = function() {
@@ -34,14 +40,27 @@
 	 * @param user {Object} with user data trying to sign up
 	 */
 	 $scope.createUser = function () {
-	 	console.log('criar usuario');
-	 	$scope.modal.remove();
+         if (!isUserValid()) {
+             showPopup('Preencha corretamente o cadastro');
+         } else {
+             UserService.save($scope.user).then(function(data) {
+                 showPopup('Cadastro com sucesso!').then(function(res) {
+                     $scope.modal.remove();
+                 });
+             }, function(err) {
+                 showPopup(err.data.mensagem);
+             });
+         }
 	};
 
-	// Execute action on remove modal
-  $scope.$on('modal.removed', function() {
-    $state.go('login');
-  });
+    function isUserValid() {
+        return $scope.user.password === $scope.user.confirmation;
+    };
+
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function() {
+        $state.go('login');
+    });
 
 	/**
 	 * Show a popup for the user with a message

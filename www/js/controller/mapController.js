@@ -3,25 +3,29 @@
 
   var app = angular.module('starter.controller');
 
-  app.controller('MapController', function($scope, $ionicPopup, MapService) {
+  app.controller('MapController', function($scope, $state, $ionicPopup, MapService) {
+
+    var MAP_STATE = 'app.map';
 
     $scope.$on("$stateChangeSuccess", function() {
-      $scope.map = {
-        defaults: {
-          tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-          maxZoom: 18,
-          zoomControlPosition: 'bottomleft'
-        },
-        markers : {},
-        events: {
-          map: {
-            enable: ['context'],
-            logic: 'emit'
-          }
+        if ($state.current.name === MAP_STATE) {
+            $scope.map = {
+                defaults: {
+                    tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                    maxZoom: 18,
+                    zoomControlPosition: 'bottomleft'
+                },
+                markers : {},
+                events: {
+                    map: {
+                        enable: ['context'],
+                        logic: 'emit'
+                    }
+                }
+            };
+            $scope.centralizar();
+            MapService.updateLocation($scope.map);
         }
-      };
-      $scope.centralizar();
-      MapService.updateLocation($scope.map);
     });
 
     /**

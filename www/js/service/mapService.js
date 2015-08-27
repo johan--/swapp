@@ -1,12 +1,11 @@
 (function() {
-
 	'use strict';
 
 	var app = angular.module('starter.service');
 
 	app.factory('MapService', function($cordovaGeolocation, $ionicLoading) {
 
-		var user = {};
+		var map = {};
 
 		var options = {
 			enableHighAccuracy: true,
@@ -42,7 +41,7 @@
 			};
 		};
 
-		user.updateLocation = function(map) {
+		map.updateLocation = function(map) {
 			showLoading();
 
 			$cordovaGeolocation.getCurrentPosition().then(function(position) {
@@ -55,7 +54,7 @@
 			}, options);
 		};
 
-		user.givePlace = function(map) {
+		map.givePlace = function(map) {
 			showLoading();
 
 			$cordovaGeolocation.getCurrentPosition().then(function(position) {
@@ -69,6 +68,6 @@
 			}, options);
 		};
 
-		return user;
+		return map;
 	});
 }());
