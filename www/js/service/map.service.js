@@ -45,6 +45,7 @@
 			showLoading();
 
 			$cordovaGeolocation.getCurrentPosition().then(function(position) {
+                console.log('dados posicao', position);
 				setCenter(map, position);
 				setMarker(map, position);
 				hideLoading();

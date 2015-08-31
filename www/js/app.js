@@ -58,6 +58,26 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'le
         }
       })
 
+    .state('app.config', {
+            url: "/config",
+            views: {
+                'menuContent' :{
+                    templateUrl: "templates/config.html",
+                    controller: "ConfigController as configCtrl"
+                }
+            }
+        })
+
+    .state('app.bug', {
+        url: "/bug",
+        views: {
+            'menuContent' :{
+                templateUrl: "templates/bug.html",
+                controller: "BugController as bugCtrl"
+            }
+        }
+    })
+
     $urlRouterProvider.otherwise('/login');
 
   });
