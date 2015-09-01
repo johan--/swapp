@@ -23,7 +23,7 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'le
   })
 
     .constant('ApiEndpoint', {
-        url: 'http://localhost:8100/api'
+        url: 'http://swapp-server.herokuapp.com'
     })
 
   .config(function($stateProvider, $urlRouterProvider) {
