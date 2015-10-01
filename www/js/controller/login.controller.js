@@ -3,7 +3,7 @@
 
 	var app = angular.module('starter.controller');
 
-	app.controller('LoginController', function ($scope, $state, $ionicModal, $ionicPopup, UserService) {
+	app.controller('LoginController', function ($scope, $state, $ionicModal, $ionicPopup, UserService, $ionicLoading) {
 
         $scope.user = {};
 
@@ -22,9 +22,12 @@
 	 * @param user {Object} with user data trying to sign up
 	 */
 	 $scope.login = function () {
+        showLoading($ionicLoading);
 	 	UserService.login($scope.user.email, $scope.user.password).then(function(data) {
+            hideLoading($ionicLoading);
             $state.go('app.map');
         }, function(err) {
+            hideLoading($ionicLoading);
             showPopup(err.data.mensagem);
         });
 

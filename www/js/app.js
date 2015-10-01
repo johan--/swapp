@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter.controller', []);
 angular.module('starter.service', []);
+angular.module('starter.factory', []);
 
 angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'leaflet-directive', 'ngCordova', 'igTruncate'])
 
@@ -23,7 +24,7 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'le
   })
 
     .constant('ApiEndpoint', {
-        url: 'http://swapp-server.herokuapp.com'
+        url: 'http://localhost:8100/api'
     })
 
   .config(function($stateProvider, $urlRouterProvider) {
