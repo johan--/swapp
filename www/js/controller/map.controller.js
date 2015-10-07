@@ -3,7 +3,7 @@
 
   var app = angular.module('starter.controller');
 
-  app.controller('MapController', function($scope, $state, $ionicPopup, MapService) {
+  app.controller('MapController', function($scope, $state, $ionicPopup, MapService, Auth) {
 
     var MAP_STATE = 'app.map';
 

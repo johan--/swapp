@@ -19,6 +19,7 @@
                     Auth.clear();
                     $state.go("login");
                 }, function(error) {
+                    Auth.clear();
                     console.log(error);
                 });
 
