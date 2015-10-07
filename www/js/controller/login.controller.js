@@ -3,7 +3,7 @@
 
 	var app = angular.module('starter.controller');
 
-	app.controller('LoginController', function ($scope, $state, $ionicModal, $ionicPopup, UserService, $ionicLoading) {
+	app.controller('LoginController', function ($scope, $state, $ionicModal, $ionicPopup, UserService, $ionicLoading, Auth) {
 
         $scope.user = {};
 
@@ -23,12 +23,14 @@
 	 */
 	 $scope.login = function () {
         showLoading($ionicLoading);
-	 	UserService.login($scope.user.email, $scope.user.password).then(function(data) {
+	 	Auth.login($scope.user.email, $scope.user.password).then(function(info) {
+            console.log(info);
+            Auth.setToken(info);
             hideLoading($ionicLoading);
             $state.go('app.map');
         }, function(err) {
             hideLoading($ionicLoading);
-            showPopup(err.data.mensagem);
+            showPopup(err.data.message);
         });
 
 	};
@@ -51,7 +53,7 @@
                      $scope.modal.remove();
                  });
              }, function(err) {
-                 showPopup(err.data.mensagem);
+                 showPopup(err.data.message);
              });
          }
 	};

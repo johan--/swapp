@@ -1,16 +1,16 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('starter.factory');
+	var app = angular.module('starter.controller');
 
-	app.factory('MapService', function($cordovaGeolocation, $ionicLoading) {
+	app.service('MapService', function($cordovaGeolocation, $ionicLoading) {
 
 		var map = {};
 
 		var options = {
 			enableHighAccuracy: true,
 			timeout: 3000,
-			maximumAge: 0  
+			maximumAge: 0 
 		};
 
 		function showLoading() {

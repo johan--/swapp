@@ -4,7 +4,7 @@
 
   var app = angular.module('starter.controller');
 
-  app.controller('MenuController', function($scope, $state, $ionicPopup) {
+  app.controller('MenuController', function($scope, $state, $ionicPopup, Auth) {
   	$scope.logout = function() {
 		var confirmPopup = $ionicPopup.confirm({
         	title: 'Logout',
@@ -15,7 +15,13 @@
 
       	confirmPopup.then(function(answer) {
         	if (answer) {
-        		$state.go("login");
+                Auth.logout().then(function(info) {
+                    Auth.clear();
+                    $state.go("login");
+                }, function(error) {
+                    console.log(error);
+                });
+
         	}
       	});
   	};

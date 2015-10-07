@@ -1,9 +1,9 @@
 (function() {
     'use strict';
 
-    var app = angular.module('starter.factory');
+    var app = angular.module('starter.controller');
 
-    app.factory('UserService', function($http, ApiEndpoint) {
+    app.service('UserService', function($http, ApiEndpoint) {
         var user = {};
 
         var url = "/api/user";
@@ -21,7 +21,7 @@
                 email: email,
                 password: password
             };
-            return $http.post(ApiEndpoint.url + '/api/login', data);
+            return $http.post(ApiEndpoint.url + '/api/authenticate', data);
         };
 
         return user;
