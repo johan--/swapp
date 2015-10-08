@@ -29,6 +29,7 @@
             hideLoading($ionicLoading);
             $state.go('app.map');
         }, function(err) {
+            console.log('err', err);
             hideLoading($ionicLoading);
             showPopup(err.data.message);
         });

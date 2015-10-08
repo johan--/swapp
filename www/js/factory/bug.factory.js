@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('starter.factory');
+    var app = angular.module('starter.controller');
 
     app.factory('Bug', function($http, ApiEndpoint) {
         var bug = {};
