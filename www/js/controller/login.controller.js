@@ -3,83 +3,80 @@
 
 	var app = angular.module('starter.controller');
 
-	app.controller('LoginController', function ($scope, $state, $ionicModal, $ionicPopup, UserService, $ionicLoading, Auth) {
+    /**
+     * Controller para a view de login
+     */
+	app.controller('LoginController',[
+        '$scope',
+        '$state',
+        '$ionicModal',
+        'UserService',
+        'Auth',
+        'UI', function ($scope, $state, $ionicModal, UserService, Auth, UI) {
 
         $scope.user = {};
 
-	/**
-	 * Make a modal for a new user
-	 */
-	 $ionicModal.fromTemplateUrl("templates/signup.html", {
-	 	scope: $scope
-	 }).then(function (modal) {
-	 	$scope.modal = modal;
-	 });
+        /**
+         * Acao do botao para cadastrar um usuario
+         */
+        $scope.signup = function() {
+            $state.go('signup');
+        };
 
-	/**
-	 * Function to login at the application
-	 *
-	 * @param user {Object} with user data trying to sign up
-	 */
-	 $scope.login = function () {
-        showLoading($ionicLoading);
-	 	Auth.login($scope.user.email, $scope.user.password).then(function(info) {
-            console.log(info);
-            Auth.setToken(info);
-            hideLoading($ionicLoading);
-            $state.go('app.map');
-        }, function(err) {
-            console.log('err', err);
-            hideLoading($ionicLoading);
-            showPopup(err.data.message);
+        /**
+         * Make a modal for a new user
+         */
+        $ionicModal.fromTemplateUrl("templates/signup.html", {
+            scope: $scope
+        }).then(function (modal) {
+            $scope.modal = modal;
         });
 
-	};
+        /**
+         * Function to login at the application
+         *
+         * @param user {Object} with user data trying to sign up
+         */
+         $scope.login = function () {
+            UI.showLoading('Carregando');
+            Auth.login($scope.user.email, $scope.user.password).then(function(info) {
+                Auth.setToken(info);
+                UI.hideLoading();
+                $state.go('app.map');
+            }, function(err) {
+                UI.hideLoading();
+                UI.showPopup(err.data.message);
+            });
 
-	$scope.signup = function() {
-		$state.go('signup');
-	};
+         };
 
-	/**
-	 * Function to create a new user
-	 *
-	 * @param user {Object} with user data trying to sign up
-	 */
-	 $scope.createUser = function () {
-         if (!isUserValid()) {
-             showPopup('Preencha corretamente o cadastro');
-         } else {
-             UserService.save($scope.user).then(function(data) {
-                 showPopup('Cadastro com sucesso!').then(function(res) {
-                     $scope.modal.remove();
-                 });
-             }, function(err) {
-                 showPopup(err.data.message);
-             });
-         }
-	};
+        /**
+        * Function to create a new user
+        *
+        * @param user {Object} with user data trying to sign up
+        */
+        $scope.createUser = function () {
+            if (!isUserValid()) {
+                UI.showPopup('Preencha corretamente o cadastro');
+            } else {
+                UserService.save($scope.user).then(function(data) {
+                        UI.showPopup('Cadastro com sucesso!').then(function(res) {
+                            $scope.modal.remove();
+                        });
+                }, function(err) {
+                    UI.showPopup(err.data.message);
+                });
+            }
+        };
 
-    function isUserValid() {
-        return $scope.user.password === $scope.user.confirmation;
-    };
+        // determina se o cadastro do usuario eh valido
+        function isUserValid() {
+            return $scope.user.password === $scope.user.confirmation;
+        };
 
-    // Execute action on remove modal
-    $scope.$on('modal.removed', function() {
-        $state.go('login');
-    });
-
-	/**
-	 * Show a popup for the user with a message
-	 *
-	 * @param message the message for the user
-	 *
-	 * @return {Object} ionic popup
-	 */
-	 function showPopup(message) {
-	 	var popup = $ionicPopup.alert({
-	 		title: message
-	 	});
-	 	return popup;
-	 };
-	});
+        // Ao remover o modal de cadastro, ir para o login
+        $scope.$on('modal.removed', function() {
+            $state.go('login');
+        });
+	}]);
 }());

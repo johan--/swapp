@@ -2,7 +2,15 @@ angular.module('starter.controller', []);
 angular.module('starter.service', []);
 angular.module('starter.factory', []);
 
-var app = angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'leaflet-directive', 'ngCordova', 'igTruncate']);
+var app = angular.module('starter',
+    ['ionic',
+        'starter.controller',
+        'starter.service',
+        'starter.factory',
+        'leaflet-directive',
+        'ngCordova',
+        'igTruncate'
+    ]);
 
 app.run(function($ionicPlatform, Auth, $rootScope, $state) {
     $ionicPlatform.ready(function() {
@@ -17,6 +25,12 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state) {
         }
     });
 
+    // verificar aqui se gps e net estao habilitados
+
+    /**
+     * Aqui contem a logica para quando houver o roteamento
+     * entre as views determinar se esta sendo autenticado.
+     */
     $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams){
         var isAuthRequired = toState.authRequired;
         isAuthRequired = isAuthRequired === undefined ? toState.views.menuContent.authRequired : isAuthRequired;
@@ -28,11 +42,17 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state) {
     });
 });
 
+/**
+ * Constante para acesso a API REST
+ */
 app.constant('ApiEndpoint', {
     url: 'http://localhost:8100/api'
 });
 
-app.config(function($stateProvider, $urlRouterProvider) {
+/**
+ * Configuracao de roteamento. Ver angular-ui-router
+ */
+app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $stateProvider
 
     .state('login', {
@@ -90,6 +110,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
     })
 
-    $urlRouterProvider.otherwise('/login');
+    // caso nao seja definido o estado. Vai para este.
+    $urlRouterProvider.otherwise('/app/map');
 
+    // interceptador das requisicoes. Adiciona o token ao request, por exemplo.
+    $httpProvider.interceptors.push('Interceptor');
 });

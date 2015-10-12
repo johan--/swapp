@@ -1,9 +1,14 @@
 (function() {
     'use strict';
 
-    var app = angular.module('starter.controller');
+    var app = angular.module('starter.factory');
 
-    app.factory('Bug', function($http, ApiEndpoint) {
+    /**
+     * Factory para o cadastro de bugs.
+     */
+    app.factory('Bug', [
+        '$http',
+        'ApiEndpoint', function($http, ApiEndpoint) {
         var bug = {};
 
         var url = "/api/bug";
@@ -13,5 +18,5 @@
         };
 
         return bug;
-    });
+    }]);
 }());

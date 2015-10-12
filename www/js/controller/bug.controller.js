@@ -3,37 +3,37 @@
 
     var app = angular.module('starter.controller');
 
-    app.controller('BugController', ['$scope', '$state', 'Bug', '$ionicPopup', function($scope, $state, Bug, $ionicPopup) {
+    /**
+     * Controller para a view de cadastro de bug.
+     */
+    app.controller('BugController', [
+        '$scope',
+        '$state',
+        'Bug',
+        'UI', function($scope, $state, Bug, UI) {
+
+        // tipos que podem ser selecionados na view
         $scope.tipos = [
           'Critico',
             'Leve'
         ];
 
+        // Bug que esta sendo cadastrado no momento
         $scope.bug = {};
 
+        /**
+         * Envia o cadastro de Bug para o servidor.
+         */
         $scope.send = function() {
             Bug.save($scope.bug).then(function(info) {
-                showPopup('Obrigado! Iremos melhorar  =)').then(function() {
+                var message = 'Obrigado! Iremos melhorar  =)';
+                UI.showPopup(message).then(function() {
                     $state.go('app.map');
-                });
+                })
             }, function(err) {
-                showPopup('Nao foi possivel enviar o bug. Tente novamente mais tarde').then(function() {
-                });
+                var message = 'Nao foi possivel enviar o bug. Tente novamente mais tarde';
+                UI.showPopup(message);
             });
-        };
-
-        /**
-         * Show a popup for the user with a message
-         *
-         * @param message the message for the user
-         *
-         * @return {Object} ionic popup
-         */
-        function showPopup(message) {
-            var popup = $ionicPopup.alert({
-                title: message
-            });
-            return popup;
         };
     }]);
 }());

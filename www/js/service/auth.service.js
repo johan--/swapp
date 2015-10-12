@@ -3,11 +3,13 @@
 
     var app = angular.module('starter.service');
 
+    /**
+     * Service contendo a logica do usuario autenticado.
+     * Prove informacoes de Autenticacao.
+     */
     app.service('Auth', [
         '$http',
-        'ApiEndpoint',
-        function($http,
-                 ApiEndpoint) {
+        'ApiEndpoint', function($http, ApiEndpoint) {
 
         var self = this;
 
