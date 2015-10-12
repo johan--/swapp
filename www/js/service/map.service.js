@@ -23,9 +23,7 @@
         self.mapa = undefined;
 
         service.getMapa = function() {
-            if (self.mapa === undefined
-                && UserService.isAutenticado()
-            ) {
+            if (self.mapa === undefined) {
                 self.mapa = {
                     defaults: {
                         tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',

@@ -31,7 +31,7 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state) {
      * Aqui contem a logica para quando houver o roteamento
      * entre as views determinar se esta sendo autenticado.
      */
-    $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams){
+    $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
         var isAuthRequired = toState.authRequired;
         isAuthRequired = isAuthRequired === undefined ? toState.views.menuContent.authRequired : isAuthRequired;
 
@@ -111,7 +111,10 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     })
 
     // caso nao seja definido o estado. Vai para este.
-    $urlRouterProvider.otherwise('/app/map');
+    $urlRouterProvider.otherwise( function($injector, $location) {
+        var $state = $injector.get("$state");
+        $state.go("app.map");
+    });
 
     // interceptador das requisicoes. Adiciona o token ao request, por exemplo.
     $httpProvider.interceptors.push('Interceptor');
