@@ -43,23 +43,23 @@
                         zoom : 12
                     }
                 };
-                service.updateLocation(self.mapa);
-                service.plotMarkers(self.mapa);
+                service.updateLocation();
+                service.plotMarkers();
             }
 
             return self.mapa;
         };
 
-		function setCenter(map, position) {
-			map.center = {
+		function setCenter(position) {
+			service.getMapa().center = {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude,
 				zoom: 15
 			}
 		};
 
-        function addMarker(map, position) {
-            map.markers.now = {
+        function addMarker(position) {
+            service.getMapa().markers.now = {
                 lat:position.latitude,
                 lng:position.longitude,
                 message: position.userName || 'Voce esta aqui',
@@ -68,22 +68,22 @@
             };
         };
 
-		service.updateLocation = function(map) {
+		service.updateLocation = function() {
 			UI.showLoading('Carregando');
 			$cordovaGeolocation.getCurrentPosition().then(function(position) {
-				setCenter(map, position);
+				setCenter(position);
                 var position = {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
                 };
-				addMarker(map, position);
+				addMarker(position);
 				UI.hideLoading();
 			}, function(error) {
 				UI.hideLoading();
 			}, options);
 		};
 
-		service.givePlace = function(map) {
+		service.givePlace = function() {
 			UI.showLoading('Carregando...');
 
 			$cordovaGeolocation.getCurrentPosition().then(function(position) {
@@ -93,8 +93,8 @@
                     time: new Date()
                 };
                 UserService.sendPlace(swap).then(function(info) {
-                    setCenter(map, position);
-                    addMarker(map, info.data);
+                    setCenter(position);
+                    addMarker(info.data);
                 }, function(error) {
                     UI.showPopup('A vaga nao rolou =(');
                 });
@@ -104,7 +104,7 @@
 			}, options);
 		};
 
-        service.plotMarkers = function(mapa) {
+        service.plotMarkers = function() {
             if (!_.isUndefined(mapa.markers.now)
                 && !_.isNull(mapa.markers.now)) {
                 console.log(mapa.markers);
@@ -112,7 +112,7 @@
             }
             UserService.getSwaps().then(function(info) {
                 for (var i = 0; i < info.data.length; i++) {
-                    addMarker(mapa, info.data[i]);
+                    addMarker(info.data[i]);
                 }
             }, function(error) {
                 UI.showPopup('Nao foi possivel carregar as vagas. Tente mais tarde   =(');

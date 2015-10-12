@@ -8,6 +8,9 @@
      * para o UserService e prover a interface
      * para este service.
      *
+     * Alterar para o UserService prover a
+     * interface do MapService tbm
+     *
      */
 
     /**

@@ -30,13 +30,13 @@
             };
             UI.showPopupConfig(config).then(function(answer) {
                 if (answer) {
-                    MapService.givePlace($scope.map);
+                    MapService.givePlace();
                 }
             });
         };
 
         $scope.loadSwaps = function() {
-            MapService.plotMarkers($scope.map);
+            MapService.plotMarkers();
         };
     }]);
 }());
