@@ -59,7 +59,7 @@
 		};
 
         function addMarker(position) {
-            service.getMapa().markers.now = {
+            service.getMapa().markers[position._id || 'now'] = {
                 lat:position.latitude,
                 lng:position.longitude,
                 message: position.userName || 'Voce esta aqui',
@@ -105,14 +105,16 @@
 		};
 
         service.plotMarkers = function() {
-            if (!_.isUndefined(mapa.markers.now)
-                && !_.isNull(mapa.markers.now)) {
-                console.log(mapa.markers);
-                console.log('clear');
+            if (!_.isUndefined(mapa.markers)
+                && !_.isNull(mapa.markers)) {
+                mapa.markers = {};
             }
             UserService.getSwaps().then(function(info) {
                 for (var i = 0; i < info.data.length; i++) {
-                    addMarker(info.data[i]);
+                    var swap = info.data[i];
+                    swap.latitude += 1;
+                    swap.longitude -= 1;
+                    addMarker(swap);
                 }
             }, function(error) {
                 UI.showPopup('Nao foi possivel carregar as vagas. Tente mais tarde   =(');

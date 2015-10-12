@@ -23,6 +23,9 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state) {
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
+        /**
+         * TODO verificar gps e internet
+         */
     });
 
     // verificar aqui se gps e net estao habilitados
@@ -34,8 +37,6 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state) {
     $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
         var isAuthRequired = toState.authRequired;
         isAuthRequired = isAuthRequired === undefined ? toState.views.menuContent.authRequired : isAuthRequired;
-
-        console.log('cordova.plugins', cordova.plugins);
 
         if (isAuthRequired && !Auth.isAutenticado()) {
             $state.transitionTo('login');
