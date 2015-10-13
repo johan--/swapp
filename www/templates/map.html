@@ -7,6 +7,6 @@
 		<button ng-click="givePlace()" class="button button-icon icon ion-pin"></button>
 	</ion-nav-buttons>
 	<ion-content data-tap-disabled="true">
-    	<leaflet defaults="mapa().defaults" center="mapa().center" markers="mapa().markers" ng-if="mapa()"></leaflet>
+    	<leaflet id="map" defaults="mapa().defaults" center="mapa().center" markers="mapa().markers" ng-if="mapa()"></leaflet>
 	</ion-content>
 </ion-view>

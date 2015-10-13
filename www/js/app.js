@@ -12,7 +12,7 @@ var app = angular.module('starter',
         'igTruncate'
     ]);
 
-app.run(function($ionicPlatform, Auth, $rootScope, $state) {
+app.run(function($ionicPlatform, Auth, $rootScope, $state, $ionicPopup) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -23,9 +23,6 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state) {
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
-        /**
-         * TODO verificar gps e internet
-         */
     });
 
     // verificar aqui se gps e net estao habilitados
@@ -41,6 +38,20 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state) {
         if (isAuthRequired && !Auth.isAutenticado()) {
             $state.transitionTo('login');
             event.preventDefault();
+        }
+
+        // apenas em dispositivos eh detectado a rede
+        if (window.Connection) {
+            if (navigator.connection.type == Connection.NONE) {
+                $ionicPopup.confirm({
+                    title: "Internet Disconnected",
+                    content: "The internet is disconnected on your device."
+                }).then(function(result) {
+                    if (!result) {
+                        ionic.Platform.exitApp();
+                    }
+                });
+            }
         }
     });
 });
