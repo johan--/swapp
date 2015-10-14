@@ -35,8 +35,18 @@
             });
         };
 
+        /**
+         * Carrega as vagas de estacionamento.
+         */
         $scope.loadSwaps = function() {
             MapService.plotMarkers();
+        };
+
+        /**
+         * Localiza o usuario.
+         */
+        $scope.locate = function() {
+            MapService.updateLocation();
         };
     }]);
 }());
