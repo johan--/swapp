@@ -11,7 +11,8 @@
         '$scope',
         '$state',
         '$ionicPopup',
-        'Auth', function($scope, $state, $ionicPopup, Auth) {
+        'Auth',
+        'UI', function($scope, $state, $ionicPopup, Auth, UI) {
 
         $scope.logout = function() {
         var confirmPopup = $ionicPopup.confirm({
@@ -23,14 +24,15 @@
 
         confirmPopup.then(function(answer) {
             if (answer) {
+                UI.showLoading('Fazendo logout...');
                 Auth.logout().then(function(info) {
+                    UI.hideLoading();
                     Auth.clear();
                     $state.go("login");
                 }, function(error) {
-                    Auth.clear();
-                    console.log(error);
+                    UI.hideLoading();
+                    UI.showPopup('Logout sem sucesso');
                 });
-
             }
         });
     };

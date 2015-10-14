@@ -57,8 +57,9 @@
          */
         function geolocation(callbackSucess, callbackError) {
             var options = {
+                frequency : 1000,
                 enableHighAccuracy: true,
-                timeout: 3000, // tempo limite de espera do GPS, caso contrario, chama callbackError
+                timeout: 15000, // tempo limite de espera do GPS, caso contrario, chama callbackError
                 maximumAge: 0
             };
             $cordovaGeolocation.getCurrentPosition(options)
@@ -97,9 +98,10 @@
          * do servidor
          */
         function addMarker(marker) {
-            service.getMapa().markers[marker._id || 'now'] = {
-                lat:marker.latitude,
-                lng:marker.longitude,
+            // caso nao tenha _id, eh a posicao atual do usuario
+            service.getMapa().markers[marker._id || 'user'] = {
+                lat: marker.latitude,
+                lng: marker.longitude,
                 message: marker.userName || 'Voce esta aqui',
                 focus: true,
                 draggable: false
@@ -130,7 +132,7 @@
          * servidor a disponibilidade.
          */
 		service.givePlace = function() {
-			UI.showLoading('Carregando...');
+			UI.showLoading('Carregando localizacao...');
 
             geolocation(function(position) {
                 var swap = {
@@ -138,6 +140,7 @@
                     longitude: position.coords.longitude,
                     time: new Date()
                 };
+                UI.showLoading('Enviando vaga...');
                 UserService.sendPlace(swap).then(function(info) {
                     setCenter(position);
                     addMarker(info.data);
@@ -154,17 +157,17 @@
          * vagas de estacionamento.
          */
         service.plotMarkers = function() {
-            UI.showLoading('Carregando vagas');
+            UI.showLoading('Requisitando vagas');
 
             if (!_.isUndefined(mapa.markers)
                 && !_.isNull(mapa.markers)) {
+                // limpa o mapa
                 mapa.markers = {};
             }
             UserService.getSwaps().then(function(info) {
+                UI.showLoading('Carregando vagas');
                 for (var i = 0; i < info.data.length; i++) {
                     var swap = info.data[i];
-                    swap.latitude += 1;
-                    swap.longitude -= 1;
                     addMarker(swap);
                 }
                 UI.hideLoading();
