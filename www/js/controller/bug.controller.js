@@ -27,9 +27,7 @@
         $scope.send = function() {
             Bug.save($scope.bug).then(function(info) {
                 var message = 'Obrigado! Iremos melhorar  =)';
-                UI.showPopup(message).then(function() {
-                    $state.go('app.map');
-                })
+                UI.showPopup(message);
             }, function(err) {
                 var message = 'Nao foi possivel enviar o bug. Tente novamente mais tarde';
                 UI.showPopup(message);
