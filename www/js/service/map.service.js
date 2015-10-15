@@ -70,7 +70,7 @@
          * Feedback para quando o GPS nao funcionar.
          * Eh o callbackError do geolocation.
          */
-        function feedbackGPSNotWorking() {
+        function feedbackGPSNotWorking(error) {
             UI.hideLoading();
             UI.showPopup('GPS not working');
         };
