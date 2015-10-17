@@ -241,9 +241,12 @@
             };
 
             /**
-             * Realiz
-             * @param value
-             * @returns {Number}
+             * Realiza o cast das coordenadas. Necessario
+             * porque o valor eh muito grande e interfere
+             * da API das rotas do serviço.
+             *
+             * @param value coordenada
+             * @returns {Number} coordenada formatada.
              */
             function castPrecision(value) {
                 value = parseFloat(value).toFixed(6);

@@ -72,7 +72,7 @@
         };
 
         /**
-         * Exibir o modal de selecionar vaga.
+         * TODO Exibir o modal de selecionar vaga.
          */
         $scope.swapInfo = function() {
             console.log('mostrar modal');
