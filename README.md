@@ -11,6 +11,6 @@ Instruções:
 
 3 - Instalar o servidor localmente: https://github.com/julioleitao/swapp-server
 
-4 - O servidor para quando a aplicação está em produção se encontra em: swapp-server.herokuapp.com/api
+4 - O servidor para quando a aplicação está em produção se encontra em: http://swapp-server.herokuapp.com/api
 
 5 - O banco de dados é provido em um servidor na nuvem da Amazon. Ele está sendo fornecido pelo https://mongolab.com/
