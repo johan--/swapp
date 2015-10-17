@@ -8,14 +8,18 @@
      */
     app.service('MapService',[
         '$cordovaGeolocation',
-        '$ionicLoading',
         'UserService',
         'leafletData',
-        'UI', function($cordovaGeolocation, $ionicLoading, UserService, leafletData, UI) {
+        'UI', function($cordovaGeolocation, UserService, leafletData, UI) {
 
+            // objeto do service
             var service = {};
 
+            // mapa que esta sendo
             self.mapa = undefined;
+
+            // vagas disponiveis no mapa
+            var swaps = {};
 
             /**
              * Obtem o mapa configurado.
@@ -24,30 +28,47 @@
              */
             service.getMapa = function() {
                 if (self.mapa === undefined) {
-                    self.mapa = {
-                        defaults: {
-                            tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-                            maxZoom: 18,
-                            zoomControlPosition: 'bottomleft'
-                        },
-                        markers: {},
-                        events: {
-                            map: {
-                                enable: ['context'],
-                                logic: 'emit'
-                            }
-                        },
-                        center: {
-                            lat : 0,
-                            lng : 0,
-                            zoom : 14
-                        }
-                    };
+                    self.mapa = makeMap();
                     service.updateLocation();
                     service.plotMarkers();
                 }
 
                 return self.mapa;
+            };
+
+            /**
+             * Constroi uma nova instancia do mapa.
+             *
+             * @return um novo mapa.
+             */
+            function makeMap() {
+                return {
+                    defaults: {
+                        tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                            maxZoom: 18,
+                            zoomControlPosition: 'bottomleft'
+                    },
+                    markers: {},
+                    events: {
+                        map: {
+                            enable: ['context'],
+                                logic: 'emit'
+                        }
+                    },
+                    center: {
+                        lat : 0,
+                            lng : 0,
+                            zoom : 14
+                    }
+                };
+            };
+
+            /**
+             * Reseta o mapa. Isto eh usado
+             * para quando o usuario realizar o logout.
+             */
+            service.resetaMapa = function() {
+                self.mapa = undefined;
             };
 
             /**
@@ -166,10 +187,12 @@
                     mapa.markers = {};
                 }
                 UserService.getSwaps().then(function(info) {
+                    swaps = {};
                     UI.showLoading('Carregando vagas');
                     for (var i = 0; i < info.data.length; i++) {
                         var swap = info.data[i];
                         addMarker(swap);
+                        swaps[swap._id] = swap;
                     }
                     UI.hideLoading();
                 }, function(error) {
@@ -179,21 +202,50 @@
             };
 
             /**
+             * Retorna o conjunto de swap que
+             * existem no mapa.
+             *
+             * @returns conjunto de swap
+             */
+            service.getSwaps = function() {
+                return swaps;
+            };
+
+            /**
              * Realiza o match entre duas pessoas.
              * Uma que ofereceu a vaga e outra que esta querendo a
              * vaga.
              */
             service.takeSwap = function(swap) {
-                leafletData.getMap('map').then(function(map) {
-                    console.log(map);
-                    var routingMachine = new L.Routing.control({
-                        waypoints: [
-                            L.latLng(57.74, 11.94),
-                            L.latLng(57.6792, 11.949)
-                        ]
+                geolocation(function(position) {
+                    var from = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        time: new Date()
+                    };
+
+                    leafletData.getMap('map').then(function(map) {
+                        var routingMachine = new L.Routing.control({
+                            serviceUrl: 'https://router.project-osrm.org/viaroute', // força o endereço correto no mobile
+                            waypoints: [
+                                L.latLng(castPrecision(from.latitude), castPrecision(from.longitude)),
+                                L.latLng(castPrecision(swap.latitude), castPrecision(swap.longitude))
+                            ]
+                        });
+                        map.addControl(routingMachine);
                     });
-                    map.addControl(routingMachine);
-                });
+                }, feedbackGPSNotWorking);
+
+            };
+
+            /**
+             * Realiz
+             * @param value
+             * @returns {Number}
+             */
+            function castPrecision(value) {
+                value = parseFloat(value).toFixed(6);
+                return parseFloat(value);
             };
 
             return service;
