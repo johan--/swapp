@@ -1,7 +1,7 @@
 Swapp
 ====================
 
-Aplicativo para Empreendedorismo em Software, perído 2015.1, Universidade Federal de Campina Grande.
+Aplicativo para a disciplina Empreendedorismo em Software, período 2015.1, Universidade Federal de Campina Grande.
 
 Instruções:
 
