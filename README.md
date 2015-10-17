@@ -4,6 +4,7 @@ Swapp
 Aplicativo para Empreendedorismo em Software, perído 2015.1, Universidade Federal de Campina Grande.
 
 Instruções:
+
 1 - Usar Google Chrome
 
 2 - Instalar plugin para habilitar funcionalidades do gps: https://chrome.google.com/webstore/detail/cordova-mocks/iigcccneenmnplhhfhaeahiofeeeifpn
