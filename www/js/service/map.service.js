@@ -217,13 +217,14 @@
              * vaga.
              */
             service.takeSwap = function(swap) {
+                UI.showLoading('Carregando localizacao');
                 geolocation(function(position) {
                     var from = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
                         time: new Date()
                     };
-
+                    UI.showLoading('Realizando roteamento');
                     leafletData.getMap('map').then(function(map) {
                         var routingMachine = new L.Routing.control({
                             serviceUrl: 'https://router.project-osrm.org/viaroute', // força o endereço correto no mobile
@@ -233,6 +234,7 @@
                             ]
                         });
                         map.addControl(routingMachine);
+                        UI.hideLoading();
                     });
                 }, feedbackGPSNotWorking);
 
