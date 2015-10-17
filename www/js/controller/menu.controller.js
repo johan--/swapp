@@ -12,7 +12,8 @@
         '$state',
         '$ionicPopup',
         'Auth',
-        'UI', function($scope, $state, $ionicPopup, Auth, UI) {
+        'MapService',
+        'UI', function($scope, $state, $ionicPopup, Auth, MapService, UI) {
 
         $scope.logout = function() {
         var confirmPopup = $ionicPopup.confirm({
@@ -28,6 +29,7 @@
                 Auth.logout().then(function(info) {
                     UI.hideLoading();
                     Auth.clear();
+                    MapService.resetaMapa();
                     $state.go("login");
                 }, function(error) {
                     UI.hideLoading();
