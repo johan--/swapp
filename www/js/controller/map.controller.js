@@ -47,6 +47,7 @@
          */
         $scope.locate = function() {
             MapService.updateLocation();
+            MapService.takeSwap();
         };
     }]);
 }());
