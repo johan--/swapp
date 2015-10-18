@@ -9,10 +9,26 @@
     app.controller('MapController',[
         '$scope',
         '$state',
+        '$ionicModal',
         'MapService',
         'UserService',
-        'UI', function($scope, $state, MapService, UserService, UI) {
+        'UI', function($scope, $state, $ionicModal, MapService, UserService, UI) {
 
+        /**
+         * Realiza a linkagem entre o scope
+         * do controller e do modal e instancia
+         * no escopo o modal.
+         */
+        $ionicModal.fromTemplateUrl("templates/seeswap.html", {
+            scope: $scope
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
+
+        /**
+         * Adiciona ao scope a
+         * funçao de obter o mapa.
+         */
         $scope.mapa = function() {
             return MapService.getMapa();
         };
@@ -72,11 +88,11 @@
         };
 
         /**
-         * TODO Exibir o modal de selecionar vaga.
+         * Funcao a ser chamada quando o usuario
+         * quer a vaga.
          */
-        $scope.swapInfo = function() {
-            console.log('mostrar modal');
-            console.log($scope.swap);
+        $scope.getSwap = function() {
+            $scope.modal.hide();
             MapService.takeSwap($scope.swap);
         };
     }]);

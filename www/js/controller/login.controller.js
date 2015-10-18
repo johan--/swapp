@@ -17,13 +17,6 @@
         $scope.user = {};
 
         /**
-         * Acao do botao para cadastrar um usuario
-         */
-        $scope.signup = function() {
-            $state.go('signup');
-        };
-
-        /**
          * Make a modal for a new user
          */
         $ionicModal.fromTemplateUrl("templates/signup.html", {
@@ -61,7 +54,7 @@
             } else {
                 UserService.save($scope.user).then(function(data) {
                         UI.showPopup('Cadastro com sucesso!').then(function(res) {
-                            $scope.modal.remove();
+                            $scope.modal.hide();
                         });
                 }, function(err) {
                     UI.showPopup(err.data.message);
@@ -73,10 +66,5 @@
         function isUserValid() {
             return $scope.user.password === $scope.user.confirmation;
         };
-
-        // Ao remover o modal de cadastro, ir para o login
-        $scope.$on('modal.removed', function() {
-            $state.go('login');
-        });
 	}]);
 }());

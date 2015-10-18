@@ -17,7 +17,10 @@
      * Service para utilidades da UI.
      * Prove uma unificacao no uso dos componentes.
      */
-    app.service('UI',  ['$ionicPopup', '$ionicModal', '$ionicLoading', function($ionicPopup, $ionicModal, $ionicLoading) {
+    app.service('UI',  [
+        '$ionicPopup',
+        '$ionicModal',
+        '$ionicLoading', function($ionicPopup, $ionicModal, $ionicLoading) {
         var self = this;
 
         this.showPopup = function(message) {

@@ -77,13 +77,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         authRequired: false
     })
 
-    .state('signup', {
-        url: "/signup",
-        templateUrl: "templates/signup.html",
-        controller: "LoginController",
-        authRequired: false
-    })
-
     .state('app', {
         url: "/app",
         abstract: true,
