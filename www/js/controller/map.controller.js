@@ -50,6 +50,7 @@
          * oferecer a vaga
          */
         $scope.givePlace = function() {
+            $scope.popover.hide();
             var config = {
                 title: 'Disponibilizar vaga',
                 template: 'Você vai realmente disponibilizar sua vaga?',
@@ -89,6 +90,7 @@
          * Carrega as vagas de estacionamento.
          */
         $scope.loadSwaps = function() {
+            $scope.popover.hide();
             MapService.plotMarkers();
         };
 
@@ -96,6 +98,7 @@
          * Localiza o usuario.
          */
         $scope.locate = function() {
+            $scope.popover.hide();
             MapService.updateLocation();
         };
 
