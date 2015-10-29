@@ -10,9 +10,10 @@
         '$scope',
         '$state',
         '$ionicModal',
+        '$ionicPopover',
         'MapService',
         'UserService',
-        'UI', function($scope, $state, $ionicModal, MapService, UserService, UI) {
+        'UI', function($scope, $state, $ionicModal, $ionicPopover, MapService, UserService, UI) {
 
         /**
          * Realiza a linkagem entre o scope
@@ -23,6 +24,17 @@
             scope: $scope
         }).then(function (modal) {
             $scope.modal = modal;
+        });
+
+        /**
+         * Realiza a linkagem entre o scope
+         * do controller e do popover e instancia
+         * no escopo o popover.
+         */
+        $ionicPopover.fromTemplateUrl('templates/map-popover.html', {
+            scope: $scope
+        }).then(function(popover) {
+            $scope.popover = popover;
         });
 
         /**
@@ -94,6 +106,16 @@
         $scope.getSwap = function() {
             $scope.modal.hide();
             MapService.takeSwap($scope.swap);
+        };
+
+        /**
+         * Açao ao clicar no botao more-vertical
+         *
+         * @param $event evento acionado
+         * pelo usuario
+         */
+        $scope.openPopover = function($event) {
+            $scope.popover.show($event);
         };
     }]);
 }());
