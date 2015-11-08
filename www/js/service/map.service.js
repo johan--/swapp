@@ -119,14 +119,15 @@
              * @param marker {Object} marker
              * do servidor
              */
-            function addMarker(marker) {
+            function addMarker(marker, custom) {
                 // caso nao tenha _id, eh a posicao atual do usuario
                 service.getMapa().markers[marker._id || 'user'] = {
                     lat: marker.latitude,
                     lng: marker.longitude,
                     message: marker.userName || 'Voce esta aqui',
                     focus: true,
-                    draggable: false
+                    draggable: false,
+                    icon: custom
                 };
             };
 
@@ -162,10 +163,16 @@
                         longitude: position.coords.longitude,
                         time: new Date()
                     };
+                    var custom = {
+                        iconUrl: 'img/vaga-livre.png',
+                        iconAnchor:   [25, 50], // point of the icon which will correspond to marker's location
+                        popupAnchor:  [3, -90] // point from which the popup should open relative to the iconAnchor
+                    };
+
                     UI.showLoading('Enviando vaga...');
                     UserService.sendPlace(swap).then(function(info) {
                         setCenter(position);
-                        addMarker(info.data);
+                        addMarker(info.data, custom);
                         UI.hideLoading();
                     }, function(error) {
                         UI.hideLoading();
