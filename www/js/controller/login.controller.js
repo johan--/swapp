@@ -35,12 +35,16 @@
             Auth.login($scope.user.email, $scope.user.password).then(function(info) {
                 Auth.setToken(info);
                 UI.hideLoading();
+                $scope.user = {};
                 $state.go('app.map');
             }, function(err) {
                 UI.hideLoading();
-                UI.showPopup(err.data.message);
+                var mensagem = "Não foi possível logar";
+                if (err.data !== undefined && err.data.message !== undefined) {
+                    mensagem = err.data.message;
+                }
+                UI.showPopup(mensagem);
             });
-
          };
 
         /**

@@ -25,7 +25,8 @@
 
         this.showPopup = function(message) {
             var popup = $ionicPopup.alert({
-                title: message
+                title: message,
+                okType: 'button-assertive'
             });
             return popup;
         };

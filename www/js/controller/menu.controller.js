@@ -20,7 +20,8 @@
             title: 'Logout',
             template: 'Você quer realmente sair?',
             cancelText: 'Não',
-            okText: 'Sim'
+            okText: 'Sim',
+            okType: 'button-assertive'
         });
 
         confirmPopup.then(function(answer) {

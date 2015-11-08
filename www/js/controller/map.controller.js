@@ -55,7 +55,8 @@
                 title: 'Disponibilizar vaga',
                 template: 'Você vai realmente disponibilizar sua vaga?',
                 cancelText: 'Não',
-                okText: 'Sim'
+                okText: 'Sim',
+                okType: 'button-assertive'
             };
             UI.showPopupConfig(config).then(function(answer) {
                 if (answer) {
