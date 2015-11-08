@@ -1,7 +1,8 @@
 <ion-view>
     <ion-content class="padding">
-        <div class="list">
-            <img id="spinner" src="img/logo.png" class="logo">
+        <div class="inline">
+            <img id="spinner" src="img/logo-setas.png" class="logo-setas">
+            <img id="spinner-car" src="img/logo-carrinho.png" class="logo-car">
             <div class="logo-name">Swapp</div>
         </div>
         <div class="list card padding">
@@ -13,12 +14,12 @@
                 <span class="input-label">Password</span>
                 <input ng-model="user.password" type="password">
             </label>
-            <button ng-click="login()" class="button button-block button-positive activated">
+            <button ng-click="login()" class="button button-block button-assertive activated">
                 Login
             </button>
         </div>
         <div class="list" style="text-align: center">
-            <button ng-click="modal.show()" class="button button-small button-outline icon-left ion-person-add button-positive">
+            <button ng-click="modal.show()" class="button button-small button-outline icon-left ion-person-add button-dark">
                 Create Account
             </button>
         </div>

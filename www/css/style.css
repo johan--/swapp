@@ -32,12 +32,20 @@ body {
     }
 }
 
-.logo {
+.logo-setas {
     display: block;
     position: relative;
     width: 60%;
     margin: 0 auto;
     padding: 1em;
+}
+
+.logo-car {
+    display: block;
+    position: relative;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: -58%;
 }
 
 .logo-name {
