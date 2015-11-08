@@ -37,8 +37,14 @@
         };
 
         this.showLoading = function(message) {
+            var template = "";
+            template += "<div class='list'>";
+                template += "<div>" + message + "</div>";
+                template += "<div>" + "<ion-spinner icon='android'></ion-spinner>" + "</div>";
+            template += "</div>";
+
             $ionicLoading.show({
-                template: message
+                template: template
             });
         };
 
