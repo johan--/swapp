@@ -89,6 +89,19 @@
             };
 
             /**
+             * @return {Object} contendo os dados
+             * do icone do marcador do mapa
+             */
+            function getFreeSwap() {
+                var custom = {
+                    iconUrl: 'img/vaga-livre.png',
+                    iconAnchor:   [25, 50], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [3, -40] // point from which the popup should open relative to the iconAnchor
+                };
+                return custom;
+            };
+
+            /**
              * Feedback para quando o GPS nao funcionar.
              * Eh o callbackError do geolocation.
              */
@@ -163,16 +176,11 @@
                         longitude: position.coords.longitude,
                         time: new Date()
                     };
-                    var custom = {
-                        iconUrl: 'img/vaga-livre.png',
-                        iconAnchor:   [25, 50], // point of the icon which will correspond to marker's location
-                        popupAnchor:  [3, -90] // point from which the popup should open relative to the iconAnchor
-                    };
 
                     UI.showLoading('Enviando vaga...');
                     UserService.sendPlace(swap).then(function(info) {
                         setCenter(position);
-                        addMarker(info.data, custom);
+                        addMarker(info.data, getFreeSwap());
                         UI.hideLoading();
                     }, function(error) {
                         UI.hideLoading();
@@ -198,7 +206,7 @@
                     UI.showLoading('Carregando vagas');
                     for (var i = 0; i < info.data.length; i++) {
                         var swap = info.data[i];
-                        addMarker(swap);
+                        addMarker(swap, getFreeSwap());
                         swaps[swap._id] = swap;
                     }
                     UI.hideLoading();
