@@ -81,7 +81,7 @@
                 var options = {
                     frequency : 1000,
                     enableHighAccuracy: true,
-                    timeout: 15000, // tempo limite de espera do GPS, caso contrario, chama callbackError
+                    timeout: 5000, // tempo limite de espera do GPS, caso contrario, chama callbackError
                     maximumAge: 0
                 };
                 $cordovaGeolocation.getCurrentPosition(options)
