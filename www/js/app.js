@@ -97,12 +97,12 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         }
     })
 
-    .state('app.config', {
-        url: "/config",
+    .state('app.profile', {
+        url: "/profile",
         views: {
             'menuContent' :{
-                templateUrl: "templates/config.html",
-                controller: "ConfigController as configCtrl",
+                templateUrl: "templates/profile.html",
+                controller: "ProfileController as profileCtrl",
                 authRequired: true
             }
         }

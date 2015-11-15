@@ -17,17 +17,26 @@
             return sessionStorage.getItem('token');
         };
 
+        this.setToken = function(token) {
+            sessionStorage.setItem('token', token);
+        };
+
         this.isAutenticado = function() {
           return !_.isNull(self.getToken())
               && !_.isUndefined(self.getToken());
         };
 
-        this.setToken = function(info) {
-            sessionStorage.setItem('token', info.data.token);
+        this.clear = function() {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('userId');
         };
 
-        this.clear = function() {
-          sessionStorage.removeItem('token');
+        this.login = function(email, password) {
+            var data = {
+                email: email,
+                password: password
+            };
+            return $http.post(ApiEndpoint.url + '/api/authenticate/login', data);
         };
 
         this.logout = function() {
@@ -37,12 +46,12 @@
             return $http.post(ApiEndpoint.url + '/api/authenticate/logout', data);
         };
 
-        this.login = function(email, password) {
-            var data = {
-                email: email,
-                password: password
-            };
-            return $http.post(ApiEndpoint.url + '/api/authenticate/login', data);
+        this.getUserId = function() {
+            return JSON.parse(sessionStorage.getItem('userId')).id;
+        };
+
+        this.setUserId = function(userId) {
+            sessionStorage.setItem('userId', JSON.stringify({id: userId}));
         };
     }]);
 }());

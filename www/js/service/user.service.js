@@ -18,8 +18,12 @@
             return $http.post(ApiEndpoint.url +  url, data);
         };
 
-        service.update = function(data) {
-            return $http.put(ApiEndpoint.url + url, data);
+        service.update = function(id, data) {
+            return $http.put(ApiEndpoint.url + url + "/" + id, data);
+        };
+
+        service.getById = function(id) {
+            return $http.get(ApiEndpoint.url + url + "/" + id);
         };
 
         service.login = function(email, password) {

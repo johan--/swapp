@@ -290,3 +290,8 @@ p {
     transition: 0.3s all ease-in-out;
     width: initial;
 }
+
+.alinha-check {
+    margin-top: 2.6em;
+    margin-left: 1.8em;
+}

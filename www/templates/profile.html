@@ -1,0 +1,73 @@
+<ion-view>
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left"class="button button-clear button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content data-tap-disabled="true">
+        <div class="im-wrapper">
+            <h4 class="border-top">
+                <div class="row">
+                    <div class="col">
+                        <div class="text-left"><i class="icon ion-edit"></i>Perfil</div>
+                    </div>
+                    <div class="col">
+                        <div class="text-right">Exibir</div>
+                    </div>
+                </div>
+            </h4>
+            <div class="list">
+                <!-- nome -->
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Nome</span>
+                    <input ng-model="user.name" type="text" placeholder="Nome">
+                </label>
+                <!-- senha -->
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Senha</span>
+                    <input ng-model="user.password" type="password" placeholder="Senha">
+                </label>
+                <!-- placa -->
+                <div class="row item">
+                    <label class="col col-75 item-input item-floating-label">
+                        <span class="input-label">Placa</span>
+                        <input ng-model="user.placa.value" type="text" placeholder="Placa">
+                    </label>
+                    <label class="col item-toggle toggle toggle-assertive">
+                        <input type="checkbox" ng-model="user.placa.check">
+                        <div class="track alinha-check">
+                            <div class="handle alinha-check"></div>
+                        </div>
+                    </label>
+                </div>
+                <!-- cor -->
+                <div class="row item">
+                    <label class="col col-75 item-input item-floating-label">
+                        <span class="input-label">Cor</span>
+                        <input ng-model="user.cor.value" type="text" placeholder="Cor">
+                    </label>
+                    <label class="col item-toggle toggle toggle-assertive">
+                        <input type="checkbox" ng-model="user.cor.check">
+                        <div class="track alinha-check">
+                            <div class="handle alinha-check"></div>
+                        </div>
+                    </label>
+                </div>
+                <!-- modelo -->
+                <div class="row item">
+                    <label class="col col-75 item-input item-floating-label">
+                        <span class="input-label">Modelo</span>
+                        <input ng-model="user.modelo.value" type="text" placeholder="Modelo">
+                    </label>
+                    <label class="col item-toggle toggle toggle-assertive">
+                        <input type="checkbox" ng-model="user.modelo.check">
+                        <div class="track alinha-check">
+                            <div class="handle alinha-check"></div>
+                        </div>
+                    </label>
+                </div>
+                <button ng-click="salvar()" class="button button-block button-assertive activated">
+                    Salvar
+                </button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
