@@ -4,22 +4,22 @@
         <h1 class="title">Create Account</h1>
     </ion-header-bar>
     <ion-content class="padding">
-        <div class="list">
-            <label class="item item-input">
+        <div class="list padding">
+            <label class="item item-input item-floating-label">
                 <span class="input-label">Name</span>
-                <input required ng-model="user.name" type="text">
+                <input required ng-model="user.name" type="text" placeholder="Name">
             </label>
-            <label class="item item-input">
+            <label class="item item-input item-floating-label">
                 <span class="input-label">e-mail</span>
-                <input required ng-model="user.email" type="text">
+                <input required ng-model="user.email" type="text" placeholder="e-mail">
             </label>
-            <label class="item item-input">
+            <label class="item item-input item-floating-label">
                 <span class="input-label">Password</span>
-                <input required ng-model="user.password" type="password">
+                <input required ng-model="user.password" type="password" placeholder="Password">
             </label>
-            <label class="item item-input">
+            <label class="item item-input item-floating-label">
                 <span class="input-label">Confirm</span>
-                <input required ng-model="user.confirmation" type="password">
+                <input required ng-model="user.confirmation" type="password" placeholder="Confirm">
             </label>
             <button class="button button-full button-assertive" ng-click="createUser()">Create</button>
         </div>
