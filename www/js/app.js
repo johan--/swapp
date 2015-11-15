@@ -61,8 +61,8 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state, $ionicPopup) {
  * Constante para acesso a API REST
  */
 app.constant('ApiEndpoint', {
-    url: 'http://localhost:8100/api' // servidor local
-    //url: 'https://swapp-server.herokuapp.com' // deploy no heroku
+    //url: 'http://localhost:8100/api' // servidor local
+    url: 'https://swapp-server.herokuapp.com' // deploy no heroku
 });
 
 /**

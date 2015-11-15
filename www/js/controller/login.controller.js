@@ -57,12 +57,19 @@
             if (!isUserValid()) {
                 UI.showPopup('Preencha corretamente o cadastro');
             } else {
+                UI.showLoading('Cadastrando...');
                 UserService.save($scope.user).then(function(data) {
-                        UI.showPopup('Cadastro com sucesso!').then(function(res) {
-                            $scope.modal.hide();
-                        });
+                    UI.hideLoading();
+                    UI.showPopup('Cadastro com sucesso!').then(function(res) {
+                        $scope.modal.hide();
+                    });
                 }, function(err) {
-                    UI.showPopup(err.data.message);
+                    UI.hideLoading();
+                    var mensagem = "Não foi possível cadastrar. Tente novamente";
+                    if (err.data !== undefined && err.data.message !== undefined) {
+                        mensagem = err.data.message;
+                    }
+                    UI.showPopup(mensagem);
                 });
             }
         };
