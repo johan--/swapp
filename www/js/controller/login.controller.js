@@ -33,7 +33,6 @@
          $scope.login = function () {
             UI.showLoading('Carregando');
             Auth.login($scope.user.email, $scope.user.password).then(function(info) {
-                console.log('info', info);
                 Auth.setToken(info.data.token);
                 Auth.setUserId(info.data.id);
                 UI.hideLoading();
