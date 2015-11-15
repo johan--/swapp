@@ -9,7 +9,8 @@ var app = angular.module('starter',
         'starter.factory',
         'leaflet-directive',
         'ngCordova',
-        'igTruncate'
+        'igTruncate',
+        'ionic-material'
     ]);
 
 app.run(function($ionicPlatform, Auth, $rootScope, $state, $ionicPopup) {
