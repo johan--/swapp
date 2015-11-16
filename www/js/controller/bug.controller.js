@@ -24,6 +24,7 @@
                 UI.hideLoading();
                 var message = 'Obrigado! Iremos melhorar  =)';
                 UI.showPopup(message);
+                $scope.bug = {};
             }, function(err) {
                 UI.hideLoading();
                 var message = 'Nao foi possivel enviar o bug. Tente novamente mais tarde';

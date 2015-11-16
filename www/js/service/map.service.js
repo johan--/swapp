@@ -166,15 +166,19 @@
              * Funcao a ser chamada quando o usuario
              * quer fornecer uma vaga. Envia para o
              * servidor a disponibilidade.
+             *
+             * @param tempo Tempo em minutos que o
+             * usuario ira esperar.
              */
-            service.givePlace = function() {
+            service.givePlace = function(tempo) {
                 UI.showLoading('Carregando localizacao...');
 
                 geolocation(function(position) {
                     var swap = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
-                        time: new Date()
+                        time: new Date(),
+                        intervalo: tempo
                     };
 
                     UI.showLoading('Enviando vaga...');

@@ -21,6 +21,7 @@
         '$ionicPopup',
         '$ionicModal',
         '$ionicLoading', function($ionicPopup, $ionicModal, $ionicLoading) {
+
         var self = this;
 
         this.showPopup = function(message) {

@@ -3,8 +3,44 @@
         <button class="button button-clear button-icon icon ion-android-arrow-back" ng-click="modal.hide()"></button>
         <h1 class="title">Swap Info</h1>
     </ion-header-bar>
-    <ion-content class="padding">
-       VER SWAP
-        <button class="button button-full button-assertive" ng-click="getSwap()">Get Swap!</button>
+    <ion-content class="padding" data-tap-disabled="true">
+        <div class="list">
+            <!-- dia -->
+            <label class="item item-input">
+                <span class="input-label">Enviado em</span>
+                <input ng-disabled="true" type="date" ng-model="swap.time">
+            </label>
+            <!-- hora -->
+            <label class="item item-input">
+                <span class="input-label">Às</span>
+                <input ng-disabled="true" type="time" ng-model="swap.time" formatted-time>
+            </label>
+            <!-- tempo de espera -->
+            <label class="item item-input">
+                <span class="input-label">Espera até</span>
+                <input ng-disabled="true" type="time" ng-model="swap.intervalo" formatted-time>
+            </label>
+            <!-- nome -->
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Nome</span>
+                <input ng-disabled="true" ng-model="swap.user.name" type="text" placeholder="Nome">
+            </label>
+            <!-- placa -->
+            <label class="item-input item-floating-label">
+                <span class="input-label">Placa</span>
+                <input ng-disabled="true" ng-model="swap.user.placa.value" type="text" placeholder="Placa">
+            </label>
+            <!-- cor -->
+            <label class="item-input item-floating-label">
+                <span class="input-label">Cor</span>
+                <input ng-disabled="true" ng-model="swap.user.cor.value" type="text" placeholder="Cor">
+            </label>
+            <!-- modelo -->
+            <label class="item-input item-floating-label">
+                <span class="input-label">Modelo</span>
+                <input ng-disabled="true" ng-model="swap.user.modelo.value" type="text" placeholder="Modelo">
+            </label>
+            <button class="button button-full button-assertive" ng-click="getSwap()">Get Swap!</button>
+        </div>
     </ion-content>
 </ion-view>

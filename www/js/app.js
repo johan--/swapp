@@ -1,6 +1,7 @@
 angular.module('starter.controller', []);
 angular.module('starter.service', []);
 angular.module('starter.factory', []);
+angular.module('starter.directive', []);
 
 var app = angular.module('starter',
     ['ionic',

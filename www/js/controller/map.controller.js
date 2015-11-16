@@ -15,6 +15,11 @@
         'UserService',
         'UI', function($scope, $state, $ionicModal, $ionicPopover, MapService, UserService, UI) {
 
+        // dados que irao existir neste contexto
+        $scope.data = {
+            tempo: 5
+        };
+
         /**
          * Realiza a linkagem entre o scope
          * do controller e do modal e instancia
@@ -50,7 +55,22 @@
          * oferecer a vaga
          */
         $scope.givePlace = function() {
-            $scope.popover.hide();
+           getConfirmarVaga().then(function(answer) {
+                if (answer) {
+                    getConfirmarTempo().then(function(answer) {
+                       if (answer) {
+                           MapService.givePlace($scope.data.tempo);
+                       }
+                    });
+                }
+            });
+        };
+
+        /**
+         * Obtem o popup para confirmar o
+         * envio de vaga.
+         */
+        function getConfirmarVaga() {
             var config = {
                 title: 'Disponibilizar vaga',
                 template: 'Você vai realmente disponibilizar sua vaga?',
@@ -58,11 +78,22 @@
                 okText: 'Sim',
                 okType: 'button-assertive'
             };
-            UI.showPopupConfig(config).then(function(answer) {
-                if (answer) {
-                    MapService.givePlace();
-                }
-            });
+            return UI.showPopupConfig(config);
+        };
+
+        /**
+         * Obtem o popup para o usuario
+         * colocar os minutos que ira liberar a vaga.
+         */
+        function getConfirmarTempo() {
+            var config = {
+                title: 'Tempo de espera',
+                templateUrl: 'templates/tempo-vaga.html',
+                okText: 'Ok',
+                okType: 'button-assertive',
+                scope: $scope
+            };
+            return UI.showPopupConfig(config);
         };
 
         /**
@@ -71,10 +102,13 @@
          */
         $scope.$on("leafletDirectiveMarker.click", function(event, args){
             var idMarker = args.markerName;
-            var swaps = MapService.getSwaps();
+            if (idMarker !== "user") {
+                var swaps = MapService.getSwaps();
 
-            $scope.swap = swaps[idMarker];
-            $scope.showInfo = true;
+                $scope.swap = swaps[idMarker];
+                $scope.swap.time = new Date($scope.swap.time);
+                $scope.showInfo = true;
+            }
         });
 
         /**
@@ -120,6 +154,21 @@
          */
         $scope.openPopover = function($event) {
             $scope.popover.show($event);
+        };
+
+        $scope.carregarSwap = function() {
+            UI.showLoading('Carregando dados...');
+            var intervalo = $scope.swap.intervalo;
+            $scope.swap.intervalo = new Date($scope.swap.time);
+            $scope.swap.intervalo.setMinutes($scope.swap.intervalo.getMinutes() + intervalo);
+
+            UserService.getById($scope.swap.user).then(function(info) {
+                UI.hideLoading();
+                $scope.swap.user = info.data;
+            }, function(error) {
+                UI.hideLoading();
+                UI.showPopup("Nao foi possivel carregar os dados");
+            });
         };
     }]);
 }());
