@@ -10,8 +10,9 @@
         '$cordovaGeolocation',
         'UserService',
         'leafletData',
-        'UI', function($cordovaGeolocation, UserService, leafletData, UI) {
-
+        '$ionicUser',
+        '$ionicPush',
+        'UI', function($cordovaGeolocation, UserService, leafletData, $ionicUser, $ionicPush, UI) {
             // objeto do service
             var service = {};
 
@@ -181,15 +182,45 @@
                         intervalo: tempo
                     };
 
-                    UI.showLoading('Enviando vaga...');
-                    UserService.sendPlace(swap).then(function(info) {
-                        setCenter(position);
-                        addMarker(info.data, getFreeSwap());
-                        UI.hideLoading();
-                    }, function(error) {
-                        UI.hideLoading();
-                        UI.showPopup('A vaga nao rolou =(');
-                    });
+                    function sendPlace() {
+                        swap.notificationToken = UserService.getPushToken();
+                        UI.showLoading('Enviando vaga...');
+                        UserService.sendPlace(swap).then(function(info) {
+                            setCenter(position);
+                            addMarker(info.data, getFreeSwap());
+                            UI.hideLoading();
+                        }, function(error) {
+                            UI.hideLoading();
+                            UI.showPopup('A vaga nao rolou =(');
+                        });
+                    }
+
+                    if (!UserService.hasDeviceToken()) {
+                        var user = $ionicUser.get();
+
+                        if (!user.user_id) {
+                            user.user_id = $ionicUser.generateGUID();
+                        }
+
+                        $ionicUser.identify(user).then(function() {
+                            UserService.setDeviceToken(user.user_id);
+                            $ionicPush.register({
+                                canShowAlert: true,
+                                canSetBadge: true,
+                                canPlaySound: true,
+                                canRunActionOnMake: true,
+                                onNotification: function(notification) {
+                                    return true;
+                                }
+                            }).then(function(token) {
+                                UserService.setPushToken(token);
+                                sendPlace();
+                            });
+                        });
+                    } else {
+                        sendPlace();
+                    }
+
                 }, feedbackGPSNotWorking);
             };
 

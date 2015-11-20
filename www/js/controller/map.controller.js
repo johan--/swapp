@@ -14,7 +14,6 @@
         'MapService',
         'UserService',
         'UI', function($scope, $state, $ionicModal, $ionicPopover, MapService, UserService, UI) {
-
         // dados que irao existir neste contexto
         $scope.data = {
             tempo: 5

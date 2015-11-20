@@ -11,7 +11,9 @@ var app = angular.module('starter',
         'leaflet-directive',
         'ngCordova',
         'igTruncate',
-        'ionic-material'
+        'ionic-material',
+        'ionic.service.core',
+        'ionic.service.push'
     ]);
 
 app.run(function($ionicPlatform, Auth, $rootScope, $state, $ionicPopup) {
@@ -57,6 +59,15 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state, $ionicPopup) {
         }
     });
 });
+
+app.config(['$ionicAppProvider', function($ionicAppProvider) {
+    var config = {
+        app_id: 'cad1916b',
+        api_key: 'f1f82092332f497f95b19ab6fb971fa00f781259fd5ce0de',
+        dev_push: true
+    };
+    $ionicAppProvider.identify(config);
+}]);
 
 /**
  * Constante para acesso a API REST
