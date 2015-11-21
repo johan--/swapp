@@ -29,8 +29,14 @@
         this.clear = function() {
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('userId');
-            sessionStorage.removeItem('device-token');
-            sessionStorage.removeItem('push-token');
+        };
+
+        this.getPushToken = function() {
+            return sessionStorage.getItem('push-token');
+        };
+
+        this.setPushToken = function(token) {
+            sessionStorage.setItem('push-token', token);
         };
 
         this.login = function(email, password) {

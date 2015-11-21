@@ -11,7 +11,7 @@
         var self = this;
 
         this.request = function(config) {
-            if (config.url.indexOf("swap") !== -1) { // apenas requisiçoes para o nosso server adiciona o token
+            if (config.url.indexOf("swap") !== -1 || config.url.indexOf("localhost") !== -1) { // apenas requisiçoes para o nosso server adiciona o token
                 config.headers['x-access-token'] = sessionStorage.token;
             }
             return config;

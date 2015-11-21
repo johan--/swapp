@@ -13,10 +13,12 @@
 
     <!-- lib -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+<script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
     <script src="lib/leaflet/leaflet.js"></script>
     <script src="lib/leaflet/angular-leaflet-directive.min.js"></script>
     <script src="lib/ng-cordova.min.js"></script>
-    <script src="cordova.js"></script>
+    <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+<!-- <script src="cordova.js"></script> -->
     <script src="lib/underscore/underscore-min.js"></script>
     <script src="lib/drmonty-leaflet-routing-machine/js/leaflet-routing-machine.min.js"></script>
     <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
@@ -43,11 +45,11 @@
     <script src="js/service/interceptor.service.js"></script>
     <script src="js/service/map.service.js"></script>
     <script src="js/service/user.service.js"></script>
+    <script src="js/service/gps.service.js"></script>
 
     <!-- directive -->
     <script src="js/directive/igTruncate.js"></script>
     <script src="js/directive/formattedTime.js"></script>
-  
 
   <body ng-app="starter" class="platform-ios platform-cordova platform-webview">
     <ion-nav-view></ion-nav-view>

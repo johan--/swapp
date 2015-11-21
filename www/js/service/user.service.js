@@ -46,25 +46,8 @@
             return Auth.isAutenticado();
         };
 
-        service.getDeviceToken = function() {
-            return sessionStorage.getItem('device-token');
-        };
-
-        service.setDeviceToken = function(deviceToken) {
-            sessionStorage.setItem('device-token', deviceToken);
-        };
-
-        service.hasDeviceToken = function() {
-            return !_.isNull(service.getDeviceToken())
-                && !_.isUndefined(service.getDeviceToken());
-        };
-
         service.getPushToken = function() {
-            return sessionStorage.getItem('push-token');
-        }
-
-        service.setPushToken = function(token) {
-            sessionStorage.setItem('push-token', token);
+            return Auth.getPushToken();
         };
 
         return service;

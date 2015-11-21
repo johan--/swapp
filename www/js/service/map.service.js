@@ -9,10 +9,9 @@
     app.service('MapService',[
         '$cordovaGeolocation',
         'UserService',
+        'GpsService',
         'leafletData',
-        '$ionicUser',
-        '$ionicPush',
-        'UI', function($cordovaGeolocation, UserService, leafletData, $ionicUser, $ionicPush, UI) {
+        'UI', function($cordovaGeolocation, UserService, GpsService, leafletData, UI) {
             // objeto do service
             var service = {};
 
@@ -70,23 +69,6 @@
              */
             service.resetaMapa = function() {
                 self.mapa = undefined;
-            };
-
-            /**
-             * Chama a loca-lizacao via GPS.
-             *
-             * @param callbackSucess funcao a ser chamada em caso de sucesso
-             * @param callbackError funcao a ser chamada em caso de erro
-             */
-            function geolocation(callbackSucess, callbackError) {
-                var options = {
-                    frequency : 1000,
-                    enableHighAccuracy: true,
-                    timeout: 10000, // tempo limite de espera do GPS, caso contrario, chama callbackError
-                    maximumAge: 0
-                };
-                $cordovaGeolocation.getCurrentPosition(options)
-                    .then(callbackSucess, callbackError);
             };
 
             /**
@@ -152,7 +134,7 @@
             service.updateLocation = function() {
                 UI.showLoading('Carregando');
 
-                geolocation(function(position) {
+                GpsService.geolocation(function(position) {
                     setCenter(position);
                     var position = {
                         latitude: position.coords.latitude,
@@ -174,53 +156,25 @@
             service.givePlace = function(tempo) {
                 UI.showLoading('Carregando localizacao...');
 
-                geolocation(function(position) {
+                GpsService.geolocation(function(position) {
                     var swap = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
-                        time: new Date(),
-                        intervalo: tempo
+                        time: new Date().toString(),
+                        intervalo: tempo,
+                        notificationToken: UserService.getPushToken()
                     };
 
-                    function sendPlace() {
-                        swap.notificationToken = UserService.getPushToken();
-                        UI.showLoading('Enviando vaga...');
-                        UserService.sendPlace(swap).then(function(info) {
-                            setCenter(position);
-                            addMarker(info.data, getFreeSwap());
-                            UI.hideLoading();
-                        }, function(error) {
-                            UI.hideLoading();
-                            UI.showPopup('A vaga nao rolou =(');
-                        });
-                    }
-
-                    if (!UserService.hasDeviceToken()) {
-                        var user = $ionicUser.get();
-
-                        if (!user.user_id) {
-                            user.user_id = $ionicUser.generateGUID();
-                        }
-
-                        $ionicUser.identify(user).then(function() {
-                            UserService.setDeviceToken(user.user_id);
-                            $ionicPush.register({
-                                canShowAlert: true,
-                                canSetBadge: true,
-                                canPlaySound: true,
-                                canRunActionOnMake: true,
-                                onNotification: function(notification) {
-                                    return true;
-                                }
-                            }).then(function(token) {
-                                UserService.setPushToken(token);
-                                sendPlace();
-                            });
-                        });
-                    } else {
-                        sendPlace();
-                    }
-
+                    swap.notificationToken = UserService.getPushToken();
+                    UI.showLoading('Enviando vaga...');
+                    UserService.sendPlace(swap).then(function(info) {
+                        setCenter(position);
+                        addMarker(info.data, getFreeSwap());
+                        UI.hideLoading();
+                    }, function(error) {
+                        UI.hideLoading();
+                        UI.showPopup('A vaga nao rolou =(');
+                    });
                 }, feedbackGPSNotWorking);
             };
 
@@ -268,7 +222,7 @@
              */
             service.takeSwap = function(swap) {
                 UI.showLoading('Carregando localizacao');
-                geolocation(function(position) {
+                GpsService.geolocation(function(position) {
                     var from = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
@@ -276,12 +230,13 @@
                     };
                     UI.showLoading('Realizando roteamento');
                     leafletData.getMap('map').then(function(map) {
+
+                        var origem = L.latLng(castPrecision(from.latitude), castPrecision(from.longitude));
+                        var destino = L.latLng(castPrecision(swap.latitude), castPrecision(swap.longitude));
+
                         var routingMachine = new L.Routing.control({
                             serviceUrl: 'https://router.project-osrm.org/viaroute', // força o endereço correto no mobile
-                            waypoints: [
-                                L.latLng(castPrecision(from.latitude), castPrecision(from.longitude)),
-                                L.latLng(castPrecision(swap.latitude), castPrecision(swap.longitude))
-                            ]
+                            waypoints: [origem, destino]
                         });
                         map.addControl(routingMachine);
                         UI.hideLoading();

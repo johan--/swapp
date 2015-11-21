@@ -105,7 +105,7 @@
                 var swaps = MapService.getSwaps();
 
                 $scope.swap = swaps[idMarker];
-                $scope.swap.time = new Date($scope.swap.time);
+                $scope.swap.time = new Date(Date.parse($scope.swap.time));
                 $scope.showInfo = true;
             }
         });

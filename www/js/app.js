@@ -4,7 +4,7 @@ angular.module('starter.factory', []);
 angular.module('starter.directive', []);
 
 var app = angular.module('starter',
-    ['ionic',
+    ['ionic','ionic.service.core',
         'starter.controller',
         'starter.service',
         'starter.factory',
@@ -12,7 +12,7 @@ var app = angular.module('starter',
         'ngCordova',
         'igTruncate',
         'ionic-material',
-        'ionic.service.core',
+        
         'ionic.service.push'
     ]);
 
@@ -27,6 +27,13 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state, $ionicPopup) {
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
+        var push = new Ionic.Push({
+            "debug": false
+        });
+
+        push.register(function(token) {
+            Auth.setPushToken(token);
+        });
     });
 
     // verificar aqui se gps e net estao habilitados
@@ -59,15 +66,6 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state, $ionicPopup) {
         }
     });
 });
-
-app.config(['$ionicAppProvider', function($ionicAppProvider) {
-    var config = {
-        app_id: 'cad1916b',
-        api_key: 'f1f82092332f497f95b19ab6fb971fa00f781259fd5ce0de',
-        dev_push: true
-    };
-    $ionicAppProvider.identify(config);
-}]);
 
 /**
  * Constante para acesso a API REST
