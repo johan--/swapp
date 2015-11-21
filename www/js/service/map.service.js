@@ -238,6 +238,7 @@
                             serviceUrl: 'https://router.project-osrm.org/viaroute', // força o endereço correto no mobile
                             waypoints: [origem, destino]
                         });
+                        self.mapa.markers = {};
                         map.addControl(routingMachine);
                         UI.hideLoading();
                     });
