@@ -42,6 +42,10 @@
             return $http.get(ApiEndpoint.url + '/api/swap');
         };
 
+        service.updateSwap = function(swap) {
+            return $http.put(ApiEndpoint.url + '/api/swap/' + swap._id);
+        };
+
         service.isAutenticado = function() {
             return Auth.isAutenticado();
         };
@@ -49,6 +53,10 @@
         service.getPushToken = function() {
             return Auth.getPushToken();
         };
+
+        service.getUserId = function() {
+            return Auth.getUserId();
+        }
 
         return service;
     }]);

@@ -229,18 +229,24 @@
                         time: new Date()
                     };
                     UI.showLoading('Realizando roteamento');
-                    leafletData.getMap('map').then(function(map) {
+                    swap.taker = UserService.getUserId();
+                    UserService.updateSwap(swap).then(function(info) {
+                        leafletData.getMap('map').then(function(map) {
 
-                        var origem = L.latLng(castPrecision(from.latitude), castPrecision(from.longitude));
-                        var destino = L.latLng(castPrecision(swap.latitude), castPrecision(swap.longitude));
+                            var origem = L.latLng(castPrecision(from.latitude), castPrecision(from.longitude));
+                            var destino = L.latLng(castPrecision(swap.latitude), castPrecision(swap.longitude));
 
-                        var routingMachine = new L.Routing.control({
-                            serviceUrl: 'https://router.project-osrm.org/viaroute', // força o endereço correto no mobile
-                            waypoints: [origem, destino]
+                            var routingMachine = new L.Routing.control({
+                                serviceUrl: 'https://router.project-osrm.org/viaroute', // força o endereço correto no mobile
+                                waypoints: [origem, destino]
+                            });
+                            self.mapa.markers = {};
+                            map.addControl(routingMachine);
+                            UI.hideLoading();
                         });
-                        self.mapa.markers = {};
-                        map.addControl(routingMachine);
+                    }, function(error) {
                         UI.hideLoading();
+                        UI.showPopup('Nao foi possivel obter a vaga. Tente novamente.');
                     });
                 }, feedbackGPSNotWorking);
             };

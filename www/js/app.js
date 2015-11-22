@@ -32,7 +32,7 @@ app.run(function($ionicPlatform, Auth, $rootScope, $state, $ionicPopup) {
         });
 
         push.register(function(token) {
-            Auth.setPushToken(token);
+            Auth.setPushToken(token.token);
         });
     });
 
