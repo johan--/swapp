@@ -19,3 +19,6 @@ Para alterar a notificacao para ser enviada em dispositivos, antes da build, faz
 ionic config set dev_push false
 e depois:
 ionid run android
+
+Para executar com a API no heroku, alterar o app.js para:
+url: 'https://swapp-server.herokuapp.com' // deploy no heroku
